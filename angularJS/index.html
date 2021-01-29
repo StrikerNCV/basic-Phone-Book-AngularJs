@@ -1,0 +1,67 @@
+<!--ng-app(diretiva) usado para inicializar o angular e definir o nome-->
+<html ng-app="listaTelefonica">
+    <head>
+        <title>Lista Telefonica</title>
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css">
+        <!--Style é utilizado para adicionar os elementos da modificação de cada atributo escolhido-->
+        <style>
+        .jumbotron{
+            width: 400px;
+            margin-top: 20px;
+            text-align: center;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .table{
+            margin-top: 30px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+        }
+        </style>
+        <!--adicionar o script que ira ser usado em questão o angular-->
+        <script src="lib/angular/angular.js"></script>
+        <!--Necessario inicializar os modulos e o scope app que ira ser o view da aplicação a partir do controller-->
+        <script>
+           angular.module("listaTelefonica", [])
+           angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope){
+                $scope.app = "Lista Telefonica"
+                $scope.contatos = [
+                    {nome: "Pedro", telefone: "992914378"},
+                    {nome: "Ana", telefone: "9929143218"},
+                    {nome: "Lucas", telefone: "992456378"}
+                ]
+                $scope.adicionarContato = function(nome, telefone) {                   
+                    $scope.contatos.push({nome: nome, telefone: telefone})
+                }
+            })
+            </script>
+    </head>
+    <!--Pode definir o controller aqui ou no div-->
+    <body ng-controller="listaTelefonicaCtrl">
+        <!--jumbotron utilizado para fazer modificações-->
+        <div class = "jumbotron">
+           <h3> {{app}} </h3> 
+           <!--table é utilizado para formar tabelas-->
+           <table class= "table table-striped"> 
+               <tr> 
+                    <th>Nome</th>
+                    <th>Telefone</th>
+               </tr>
+               <!--ng-repeat é como se fosse o for in do python usado para montar a tabela de acordo com oq foi declarado no scope la em cima-->
+               <tr ng-repeat = "contato in contatos">
+                   <td> {{contato.nome}}</td>
+                   <td> {{contato.telefone}}</td>
+               </tr>
+            </table>
+            <!--Entrada de elementos a partir do input salvando nos respectivos objetos que serao criados de ng-model nome e telefone-->
+            <!--É possível observar as entradas conforme digita por conta do 2 way data binding, vem do angular ( define e atualiza a propriedade em scope) e dps dispara o ciclo de notif.-->
+            <!--form control usado para ficar separado os inputs, ng-model é onde cria o novo objeto nome e telfone e salva la que salva e placeholder escreve em cima do input o que for desejado-->
+            <hr/> 
+            <input class = "form-control" type = "text" ng-model = "nome" placeholder="Nome" />
+            <input class = "form-control" type = "text" ng-model = "telefone" placeholder="Telefone"/>
+            <!--ng-click mesma coisa que onClick, neste caso adiciona o contato na function la em cima adicionarContato, btn fica cinza, primary fica azul-->
+            <button class = "btn btn-primary" ng-click = "adicionarContato(nome, telefone)" > Adicionar Contato</button>
+        </div>
+    </body>
+</html>
